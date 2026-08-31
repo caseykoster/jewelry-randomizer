@@ -1,56 +1,66 @@
 import { useState } from 'react'
-import jewelry from './jewelry'
+import jewelry, { TAGS } from './jewelry'
 import './App.css'
+
+const NO_JEWELRY = { id: 'no-jewelry', name: 'No jewelry today', special: true }
 
 function pickRandom(list) {
   return list[Math.floor(Math.random() * list.length)]
 }
 
 function App() {
-  const [professionalOnly, setProfessionalOnly] = useState(false)
+  const [selectedTags, setSelectedTags] = useState(() => new Set())
   const [result, setResult] = useState(null)
-  const [isEmpty, setIsEmpty] = useState(false)
+
+  const toggleTag = (key) => {
+    setSelectedTags((prev) => {
+      const next = new Set(prev)
+      if (next.has(key)) {
+        next.delete(key)
+      } else {
+        next.add(key)
+      }
+      return next
+    })
+  }
 
   const handlePick = () => {
-    const pool = professionalOnly
-      ? jewelry.filter((piece) => piece.professional)
-      : jewelry
-
-    if (pool.length === 0) {
-      setResult(null)
-      setIsEmpty(true)
-      return
-    }
-
-    setIsEmpty(false)
-    setResult(pickRandom(pool))
+    const matches = jewelry.filter((piece) =>
+      [...selectedTags].every((tag) => piece.tags.includes(tag)),
+    )
+    setResult(pickRandom([...matches, NO_JEWELRY]))
   }
 
   return (
     <div className="app">
       <h1>Jewelry Randomizer</h1>
 
-      <label className="toggle">
-        <input
-          type="checkbox"
-          checked={professionalOnly}
-          onChange={(e) => setProfessionalOnly(e.target.checked)}
-        />
-        <span className="toggle-track">
-          <span className="toggle-thumb" />
-        </span>
-        Professional only
-      </label>
+      <div className="tag-filters">
+        {TAGS.map((tag) => (
+          <label className="toggle" key={tag.key}>
+            <input
+              type="checkbox"
+              checked={selectedTags.has(tag.key)}
+              onChange={() => toggleTag(tag.key)}
+            />
+            <span className="toggle-track">
+              <span className="toggle-thumb" />
+            </span>
+            {tag.label}
+          </label>
+        ))}
+      </div>
 
       <button className="pick-button" onClick={handlePick}>
         Pick a piece
       </button>
 
       <div className="result">
-        {isEmpty && (
-          <p className="empty">No professional pieces are tagged yet.</p>
+        {result && (
+          <p className={result.special ? 'piece-name special' : 'piece-name'}>
+            {result.name}
+          </p>
         )}
-        {result && <p className="piece-name">{result.name}</p>}
       </div>
     </div>
   )

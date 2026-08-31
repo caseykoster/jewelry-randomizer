@@ -1,15 +1,29 @@
 # Jewelry Randomizer
 
-Click a button, get a random piece of jewelry to wear. Toggle "Professional only"
-to restrict picks to pieces tagged as professional.
+Click a button, get a random piece of jewelry to wear. Check any combination of
+tag toggles (Professional, Halloween, Christmas, ...) to restrict picks to
+pieces matching all checked tags. "No jewelry today" is always a possible
+result, regardless of which tags are checked.
 
 ## Editing the jewelry list
 
-Edit `src/jewelry.js`. Each piece needs an `id`, `name`, and `professional`
-boolean:
+Edit `src/jewelry.js`. Each piece needs an `id`, `name`, and a `tags` array
+(use `[]` for an untagged, everyday piece):
 
 ```js
-{ id: 11, name: 'Silver bar necklace', professional: true },
+{ id: 17, name: 'Silver bar necklace', tags: ['professional'] },
+```
+
+To add a new tag toggle, add it to the `TAGS` list at the top of the same
+file, then tag pieces with its `key`:
+
+```js
+export const TAGS = [
+  { key: 'professional', label: 'Professional' },
+  { key: 'halloween', label: 'Halloween' },
+  { key: 'christmas', label: 'Christmas' },
+  { key: 'vacation', label: 'Vacation' },
+]
 ```
 
 ## Local development
