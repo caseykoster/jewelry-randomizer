@@ -1,9 +1,11 @@
 // Filter toggles shown in the UI, in display order.
 // Add a new tag here (and tag pieces with its `key` below) to get a new toggle.
+// `seasonal: true` means pieces with that tag are hidden from a regular
+// (nothing checked) pick and only show up once that tag is checked.
 export const TAGS = [
   { key: 'professional', label: 'Professional' },
-  { key: 'halloween', label: 'Halloween' },
-  { key: 'christmas', label: 'Christmas' },
+  { key: 'halloween', label: 'Halloween', seasonal: true },
+  { key: 'christmas', label: 'Christmas', seasonal: true },
 ]
 
 // Edit this list to manage your jewelry collection.

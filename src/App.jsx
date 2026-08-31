@@ -3,6 +3,7 @@ import jewelry, { TAGS } from './jewelry'
 import './App.css'
 
 const NO_JEWELRY = { id: 'no-jewelry', name: 'No jewelry today', special: true }
+const SEASONAL_TAGS = TAGS.filter((tag) => tag.seasonal).map((tag) => tag.key)
 
 function pickRandom(list) {
   return list[Math.floor(Math.random() * list.length)]
@@ -25,9 +26,16 @@ function App() {
   }
 
   const handlePick = () => {
-    const matches = jewelry.filter((piece) =>
-      [...selectedTags].every((tag) => piece.tags.includes(tag)),
-    )
+    const matches = jewelry.filter((piece) => {
+      const matchesChecked = [...selectedTags].every((tag) =>
+        piece.tags.includes(tag),
+      )
+      if (!matchesChecked) return false
+
+      return !piece.tags.some(
+        (tag) => SEASONAL_TAGS.includes(tag) && !selectedTags.has(tag),
+      )
+    })
     setResult(pickRandom([...matches, NO_JEWELRY]))
   }
 
