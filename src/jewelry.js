@@ -89,6 +89,8 @@ const jewelry = [
   // Christmas examples:
   { id: 73, name: 'Christmas tree cake earrings', tags: ['christmas'] },
   { id: 74, name: 'Chip and Dale pin', tags: ['christmas'] },
+  //new additions:
+  { id: 75, name: 'Shark tooth hair wrap', tags: [] },
   // A piece can carry more than one tag:
   // Example:
   // { id: 63, name: 'Red and green beaded bracelet', tags: ['christmas', 'professional'] },
