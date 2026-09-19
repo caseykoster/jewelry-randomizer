@@ -91,6 +91,7 @@ const jewelry = [
   { id: 74, name: 'Chip and Dale pin', tags: ['christmas'] },
   //new additions:
   { id: 75, name: 'Shark tooth hair wrap', tags: [] },
+  { id: 76, name: 'Floral fabric hair tie', tags: [] },
   // A piece can carry more than one tag:
   // Example:
   // { id: 63, name: 'Red and green beaded bracelet', tags: ['christmas', 'professional'] },
